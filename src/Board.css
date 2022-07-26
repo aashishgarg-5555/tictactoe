@@ -1,0 +1,36 @@
+body{
+    margin-top: 20px;
+    background-color: #444;
+}
+
+.board{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    color: red;
+    font-size: 70px;
+    flex-direction: column;
+    align-items: center;
+    background-color: #444;
+}
+
+.setup{
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.box{
+    margin-top: 10px;
+}
+
+.status{
+    margin: 8px;
+    color: red;
+}
+
+.btn{
+    margin: 20px;
+    font-size: 2rem;
+    background-color: gold;
+    color: darkblue;
+}
