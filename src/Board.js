@@ -1,20 +1,44 @@
 import React , {useState} from 'react'
 import './Board.css';
 import Square from './Square';
+import { Howl } from 'howler';
+import turn from './audioclips/turn.mp3'
+import invalid from './audioclips/invalid.mp3'
+import winso from './audioclips/winso.mp3'
 
 function Board() {
-  
+
+  var flag=0;
+
+  const sound1 = new Howl({
+    src: [turn],
+    html5: true,
+  });
+
+  const sound2 = new Howl({
+    src: [invalid],
+    html5: true,
+  });
+
+  const sound3 = new Howl({
+    src: [winso],
+    html5: true,
+  });
+
   const initialSquares = Array(9).fill(null);
   const [squares, setSquares] = useState(initialSquares);
   const [next,setNext] = useState(true);
   const handleClickEvent = (i) => {
     const newSquares = [...squares];
     const win= Boolean(calculateWinner(squares));
+
     if(newSquares[i] || win)
     {
+      sound2.play();
       return;
     } 
       newSquares[i]=next ? "X" : "O";
+      sound1.play();
       setNext(!next);
     setSquares(newSquares);
   }
@@ -28,6 +52,11 @@ function Board() {
     for(let line of lines) {
       const [a, b, c] = line;
       if(squares[a] && squares[a]===squares[b] && squares[a]===squares[c]){
+        ++flag;
+        if(flag===1)
+        {
+          sound3.play();
+        }
         return squares[a];
       }
     }
@@ -60,7 +89,7 @@ function Board() {
             <Square value={squares[8]} onClickEvent={()=>handleClickEvent(8)}></Square>
           </div>
         </div>
-        <button className='btn' onClick={()=>setSquares(initialSquares)}>RESTART GAME</button>
+        <button className='btn' onClick={()=>setSquares(initialSquares) && `${flag}=0`}>RESTART GAME</button>
     </div>
   )
 }
